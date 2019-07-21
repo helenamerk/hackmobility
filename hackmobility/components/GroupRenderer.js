@@ -4,42 +4,6 @@ import {StyleSheet, FlatList, ScrollView} from 'react-native';
 import {Card, ListItem, Button, Icon} from 'react-native-elements';
 
 class GroupRenderer extends Component {
-  /*constructor(props) {
-    super(props);
-    this.state = {
-      GROUPS: [
-        {
-          id: 0,
-          name: 'group 0',
-        },
-        {
-          id: 1,
-          name: 'group 1',
-        },
-        {
-          id: 2,
-          name: 'group 2',
-        },
-        {
-          id: 3,
-          name: 'group 3',
-        },
-        {
-          id: 4,
-          name: 'group 4',
-        },
-        {
-          id: 5,
-          name: 'group 5',
-        },
-        {
-          id: 6,
-          name: 'group 6',
-        },
-      ],
-    };
-  }*/
-
   render() {
     // const { navigate } = this.props.navigation;
     const renderGroups = ({item, index}) => {

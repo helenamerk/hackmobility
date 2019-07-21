@@ -1,15 +1,10 @@
-import React, { Component } from "react";
-import {
-  ActivityIndicator,
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
+import React, {Component} from 'react';
+import {ActivityIndicator} from 'react-native';
+
 class Loading extends Component {
   state = {};
   render() {
-    return <ActivityIndicator size="large" color="#428AF8" />;
+    return <ActivityIndicator size='large' color='#428AF8' />;
   }
 }
 

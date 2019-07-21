@@ -31,12 +31,9 @@ export class PreviewButton extends React.Component {
   render() {
     const limit = this.props.limit;
     if (this.props.story.length < limit && this.props.story.length > 0) {
-      console.log('checking render');
       console.log(this.props.story.length);
       return <BlueButton label='Preview' onPress={this.props.onPress} />;
     } else {
-      console.log('wrong length');
-      console.log(this.props.story.length);
       return null;
     }
   }

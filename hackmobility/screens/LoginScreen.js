@@ -4,7 +4,7 @@ import {BlueButton, InverseButton} from '../components/Button';
 import FormTextInput from '../components/FormTextInput';
 import GroupRenderer from '../components/GroupRenderer';
 import styles from '../config/styles';
-import {setGroup, getGroups} from '../requests';
+import {joinGroup, getGroups} from '../requests';
 
 class LoginScreen extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
@@ -21,20 +21,19 @@ class LoginScreen extends React.Component {
   };
 
   state = {
-    passengerName: '',
+    userName: '',
     password: '',
     failed: false,
     groupName: '',
   };
 
   componentDidMount() {
-    console.log(getGroups());
     const groupName = this.props.navigation.getParam('groupName');
     this.setState({groupName: groupName});
   }
 
-  handlePassengerChange = (passengerName) => {
-    this.setState({passengerName: passengerName});
+  handlePassengerChange = (userName) => {
+    this.setState({userName: userName});
   };
 
   handlePasswordChange = (password) => {
@@ -42,7 +41,14 @@ class LoginScreen extends React.Component {
   };
 
   login = async () => {
-    return setGroup(this.state.groupName);
+    return joinGroup(
+      this.state.userName,
+      this.state.groupName,
+      this.state.password
+    ).then((res) => {
+      console.log(res);
+      return res;
+    });
   };
 
   handleLoginPress = () => {
@@ -50,7 +56,10 @@ class LoginScreen extends React.Component {
 
     this.login()
       .then((res) => {
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('Home', {
+          groupName: groupName,
+          userName: userName,
+        });
       })
       .catch((err) => {
         this.setState({failed: true});
@@ -89,7 +98,7 @@ class LoginScreen extends React.Component {
         <View style={styles.form}>
           <View style={styles.formFields}>
             <FormTextInput
-              value={this.state.passengerName}
+              value={this.state.userName}
               onChangeText={this.handlePassengerChange}
               placeholder='Your Name'
             />

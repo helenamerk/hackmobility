@@ -1,53 +1,53 @@
-import * as React from "react";
-import { Text, View, KeyboardAvoidingView, Button } from "react-native";
-import { BlueButton, InverseButton } from "../components/Button";
-import GroupRenderer from "../components/GroupRenderer";
-import styles from "../config/styles";
-import { setGroup, getGroups } from "../requests";
-import RenderGroupMembers from "../components/RenderGroupMembers";
-import { Card, ListItem, Icon } from "react-native-elements";
+import * as React from 'react';
+import {Text, View, KeyboardAvoidingView, Button} from 'react-native';
+import {BlueButton, InverseButton} from '../components/Button';
+import GroupRenderer from '../components/GroupRenderer';
+import styles from '../config/styles';
+import {joinGroup, getGroups} from '../requests';
+import RenderGroupMembers from '../components/RenderGroupMembers';
+import {Card, ListItem, Icon} from 'react-native-elements';
 class EndRideScreen extends React.Component {
-  static navigationOptions = ({ navigation, navigationOptions }) => {
-    const { params } = navigation.state;
+  static navigationOptions = ({navigation, navigationOptions}) => {
+    const {params} = navigation.state;
 
     return {
-      title: "EndRide",
+      title: 'EndRide',
       /* These values are used instead of the shared configuration! */
       headerStyle: {
-        backgroundColor: navigationOptions.headerTintColor
+        backgroundColor: navigationOptions.headerTintColor,
       },
-      headerTintColor: navigationOptions.headerStyle.backgroundColor
+      headerTintColor: navigationOptions.headerStyle.backgroundColor,
     };
   };
 
   state = {};
   GetDistanceTravelled = () => {
     const params = {
-      mode: "fastest;car;traffic:enabled",
-      waypoint0: "37.7397,-121.4252",
-      waypoint1: "37.9577,-121.2908",
-      representation: "display",
-      routeAttributes: "summary"
+      mode: 'fastest;car;traffic:enabled',
+      waypoint0: '37.7397,-121.4252',
+      waypoint1: '37.9577,-121.2908',
+      representation: 'display',
+      routeAttributes: 'summary',
     };
     routingService.calculateRoute(
       params,
-      success => {
+      (success) => {
         const routeLineString = new H.geo.LineString();
-        success.response.route[0].shape.forEach(point => {
-          const [lat, lng] = point.split(",");
+        success.response.route[0].shape.forEach((point) => {
+          const [lat, lng] = point.split(',');
           routeLineString.pushPoint({
             lat: lat,
-            lng: lng
+            lng: lng,
           });
         });
         const routePolyline = new H.map.Polyline(routeLineString, {
           style: {
-            lineWidth: 5
-          }
+            lineWidth: 5,
+          },
         });
         map.addObject(routePolyline);
       },
-      error => {
+      (error) => {
         console.log(error);
       }
     );
@@ -63,7 +63,7 @@ class EndRideScreen extends React.Component {
         <Text>EndRideScreen</Text>
         <Text>Thank you for riding with our app</Text>
         <Text>Points Earned: 90 katoh Points</Text>
-        <BlueButton label="done" style={{ padding: 10 }} />
+        <BlueButton label='done' style={{padding: 10}} />
       </View>
     );
   }

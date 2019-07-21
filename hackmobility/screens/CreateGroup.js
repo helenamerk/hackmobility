@@ -3,7 +3,7 @@ import {Text, View, KeyboardAvoidingView} from 'react-native';
 import {BlueButton, InverseButton} from '../components/Button';
 import GroupRenderer from '../components/GroupRenderer';
 import styles from '../config/styles';
-import {setGroup, getGroups, startSmartcarAuth} from '../requests';
+import {joinGroup, getGroups, startSmartcarAuth} from '../requests';
 import FormTextInput from '../components/FormTextInput';
 
 class CreateGroup extends React.Component {
@@ -32,7 +32,7 @@ class CreateGroup extends React.Component {
     this.setState({newGroupName: newGroupName});
   };
 
-  handlePasswordChange = (newGroupName) => {
+  handlePasswordChange = (password) => {
     this.setState({password: password});
   };
 
@@ -68,16 +68,16 @@ class CreateGroup extends React.Component {
               onChangeText={this.handleGroupName}
               placeholder='New Group Name'
             />
-            <InverseButton
-              label='Create Group'
-              onPress={() => this.handleNewGroupPress()}
-              styles={{top: 20}}
-            />
             <FormTextInput
               value={this.state.password}
               onChangeText={this.handlePasswordChange}
               placeholder='Password (for group)'
               secureTextEntry={true}
+            />
+            <BlueButton
+              label='Create Group'
+              onPress={() => this.handleNewGroupPress()}
+              styles={{top: 20}}
             />
           </View>
         </View>

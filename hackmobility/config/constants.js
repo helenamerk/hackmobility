@@ -1,1 +1,1 @@
-export const servername = 'https://www.mdshulman.com/hackmobility/';
+export const servername = 'https://www.mdshulman.com/hackmobility';
