@@ -1,31 +1,33 @@
-import * as React from 'react';
-import {Text, View} from 'react-native';
-import {BlueButton} from '../components/Button';
-import {getUserPoints} from '../requests';
+import * as React from "react";
+import { Text, View } from "react-native";
+import { BlueButton } from "../components/Button";
+import { getUserPoints } from "../requests";
 
 class EndRideScreen extends React.Component {
-  static navigationOptions = ({navigation, navigationOptions}) => {
-    const {params} = navigation.state;
+  static navigationOptions = ({ navigation, navigationOptions }) => {
+    const { params } = navigation.state;
 
     return {
-      title: 'Ride Summary',
+      title: "Ride Summary",
       /* These values are used instead of the shared configuration! */
       headerStyle: {
-        backgroundColor: navigationOptions.headerTintColor,
+        backgroundColor: navigationOptions.headerTintColor
       },
-      headerTintColor: navigationOptions.headerStyle.backgroundColor,
+      headerTintColor: navigationOptions.headerStyle.backgroundColor
     };
   };
 
   state = {
-    points: 'loading...',
+    points: "loading..."
   };
-
+  handleTripComplete = () => {
+    this.props.navigation.navigate("Home");
+  };
   componentDidMount = () => {
-    console.log('?');
-    getUserPoints().then((points) => {
+    console.log("?");
+    getUserPoints().then(points => {
       console.log(points);
-      this.setState({points: points});
+      this.setState({ points: points });
     });
   };
 
@@ -70,7 +72,11 @@ class EndRideScreen extends React.Component {
       <View style>
         <Text>Thank you for riding with our app</Text>
         <Text>Points Earned: {this.state.points} kudos Points</Text>
-        <BlueButton label='Return Home' style={{padding: 10}} />
+        <BlueButton
+          onPress={this.handleTripComplete}
+          label="Return Home"
+          style={{ padding: 10 }}
+        />
       </View>
     );
   }
