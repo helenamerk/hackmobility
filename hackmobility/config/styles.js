@@ -3,11 +3,10 @@ import colors from "../config/colors";
 
 const styles = StyleSheet.create({
   baseText: {
-    fontFamily: "Roboto",
-    padding: 20,
+    padding: 20
   },
   lilPadding: {
-    padding: 20,
+    padding: 20
   },
   close: {
     margin: 5,
@@ -76,16 +75,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.BLUE,
     marginBottom: 12,
     paddingVertical: 12,
-    borderRadius: 20,
+    borderRadius: 10,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "rgba(255,255,255,0.7)",
-    height: 100
+    borderColor: "rgba(255,255,255,0.7)"
   },
   buttonStyleText: {
     color: colors.WHITE,
     textAlign: "left",
-    height: 50,
-    fontSize: 40
+    height: 20
   },
   blueButtonStyleContainer: {
     width: "30%",
@@ -95,7 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.BLUE,
     marginBottom: 12,
     paddingVertical: 12,
-    borderRadius: 20,
+    borderRadius: 10,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: "rgba(255,255,255,0.7)"
   },
@@ -107,7 +104,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingVertical: 12,
     padding: 12,
-    borderRadius: 20,
+    borderRadius: 10,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: colors.BLUE
   },
@@ -128,14 +125,14 @@ const styles = StyleSheet.create({
   },
   alertText: {
     paddingLeft: 0,
-    color: colors.TORCH_RED,
+    color: colors.TORCH_RED
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
+    justifyContent: "center",
+    flexDirection: "column",
+    justifyContent: "center"
+  }
 });
 
 export default styles;

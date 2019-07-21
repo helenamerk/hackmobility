@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, View } from "react-native";
 import { BlueButton } from "../components/Button";
 import { getUserPoints } from "../requests";
-
+import colors from "../config/colors"; // 1.0.0-beta.27
 class EndRideScreen extends React.Component {
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
@@ -69,7 +69,15 @@ class EndRideScreen extends React.Component {
 
   render() {
     return (
-      <View style>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignSelf: "center",
+          width: "100%",
+          backgroundColor: colors.WHITE
+        }}
+      >
         <Text>Thank you for riding with our app</Text>
         <Text>Points Earned: {this.state.points} kudos Points</Text>
         <BlueButton
