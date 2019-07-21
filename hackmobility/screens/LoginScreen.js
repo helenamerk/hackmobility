@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import * as React from "react";
 import { Text, View, KeyboardAvoidingView } from "react-native";
 import { BlueButton, InverseButton } from "../components/Button";
@@ -5,6 +6,15 @@ import FormTextInput from "../components/FormTextInput";
 import GroupRenderer from "../components/GroupRenderer";
 import styles from "../config/styles";
 import { joinGroup, getGroups } from "../requests";
+=======
+import * as React from 'react';
+import {Text, View, KeyboardAvoidingView} from 'react-native';
+import {BlueButton, InverseButton} from '../components/Button';
+import FormTextInput from '../components/FormTextInput';
+import GroupRenderer from '../components/GroupRenderer';
+import styles from '../config/styles';
+import {joinGroup} from '../requests';
+>>>>>>> cfcf69de1245cce280af40224cae519648d04b2f
 
 class LoginScreen extends React.Component {
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -55,8 +65,15 @@ class LoginScreen extends React.Component {
     console.log("Login button pressed");
 
     this.login()
+<<<<<<< HEAD
       .then(res => {
         this.props.navigation.navigate("Home", {
+=======
+      .then((res) => {
+        console.log('LOGGED IN WITH:');
+        console.log(this.state.userName);
+        this.props.navigation.navigate('Home', {
+>>>>>>> cfcf69de1245cce280af40224cae519648d04b2f
           groupName: this.state.groupName,
           userName: this.state.userName
         });
