@@ -3,7 +3,10 @@ import colors from '../config/colors';
 
 const styles = StyleSheet.create({
   baseText: {
-    fontFamily: 'Roboto',
+    padding: 20,
+  },
+  lilPadding: {
+    padding: 20,
   },
   close: {
     margin: 5,
@@ -116,12 +119,6 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     paddingTop: 5,
   },
-  checkBoxView: {
-    flex: 1,
-    flexDirection: 'row',
-    paddingLeft: 0,
-    paddingTop: 5,
-  },
   subtitleText: {
     paddingLeft: 0,
     color: colors.REAL_GREY,
@@ -129,6 +126,12 @@ const styles = StyleSheet.create({
   alertText: {
     paddingLeft: 0,
     color: colors.TORCH_RED,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
 });
 

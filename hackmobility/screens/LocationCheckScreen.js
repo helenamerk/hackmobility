@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {Text, View, KeyboardAvoidingView, Button} from 'react-native';
-import {BlueButton, InverseButton} from '../components/Button';
+import {BlueButton} from '../components/Button';
 import GroupRenderer from '../components/GroupRenderer';
 import styles from '../config/styles';
-import {joinGroup, checkGroupStatus} from '../requests';
+import {checkGroupStatus} from '../requests';
 import Storage from '../Storage';
 import Loading from '../components/Loading';
 
@@ -12,7 +12,7 @@ class LocationCheckScreen extends React.Component {
     const {params} = navigation.state;
 
     return {
-      title: 'LocationCheck',
+      title: 'Verify Trip Details',
       /* These values are used instead of the shared configuration! */
       headerStyle: {
         backgroundColor: navigationOptions.headerTintColor,
@@ -80,7 +80,9 @@ class LocationCheckScreen extends React.Component {
             onPress={this.findCoordinates}
           />
         )}
-        {this.state.loading && <Loading />}
+        {this.state.loading && (
+          <Loading extraText='Ensuring all passengers are near vehicle.' />
+        )}
       </View>
     );
   }
