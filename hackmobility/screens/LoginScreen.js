@@ -57,8 +57,8 @@ class LoginScreen extends React.Component {
     this.login()
       .then((res) => {
         this.props.navigation.navigate('Home', {
-          groupName: groupName,
-          userName: userName,
+          groupName: this.state.groupName,
+          userName: this.state.userName,
         });
       })
       .catch((err) => {

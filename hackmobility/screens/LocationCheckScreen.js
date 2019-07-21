@@ -41,7 +41,7 @@ class LocationCheckScreen extends React.Component {
       if (res) {
         clearInterval(this.state.timeoutid);
         this.setState({loading: false});
-        this.props.navigation.navigate('GroupHomeScreen');
+        this.props.navigation.navigate('TripScreen');
       } else {
         console.log('sad');
       }

@@ -1,55 +1,55 @@
-import React from "react";
+import React from 'react';
 
-import { createStackNavigator, createAppContainer } from "react-navigation"; // 1.0.0-beta.27
-import LoginScreen from "./screens/LoginScreen";
-import HomeScreen from "./screens/HomeScreen";
-import GroupScreen from "./screens/GroupScreen";
-import LocationCheckScreen from "./screens/LocationCheckScreen";
-import GroupHomeScreen from "./screens/GroupHomeScreen";
-import EndRideScreen from "./screens/EndRideScreen";
-import colors from "./config/colors";
+import {createStackNavigator, createAppContainer} from 'react-navigation'; // 1.0.0-beta.27
+import LoginScreen from './screens/LoginScreen';
+import HomeScreen from './screens/HomeScreen';
+import GroupScreen from './screens/GroupScreen';
+import LocationCheckScreen from './screens/LocationCheckScreen';
+import TripScreen from './screens/TripScreen';
+import EndRideScreen from './screens/EndRideScreen';
+import colors from './config/colors';
 
-import MyWebViewScreen from "./screens/MyWebViewScreen";
-import CreateGroup from "./screens/CreateGroup";
+import MyWebViewScreen from './screens/MyWebViewScreen';
+import CreateGroup from './screens/CreateGroup';
 
 const MainStack = createStackNavigator(
   {
     Home: {
-      screen: HomeScreen
+      screen: HomeScreen,
     },
     GroupScreen: {
-      screen: GroupScreen
+      screen: GroupScreen,
     },
     LoginScreen: {
-      screen: LoginScreen
+      screen: LoginScreen,
     },
     LocationCheckScreen: {
-      screen: LocationCheckScreen
+      screen: LocationCheckScreen,
     },
-    GroupHomeScreen: {
-      screen: GroupHomeScreen
+    TripScreen: {
+      screen: TripScreen,
     },
     EndRideScreen: {
-      screen: EndRideScreen
+      screen: EndRideScreen,
     },
     MyWebViewScreen: {
-      screen: MyWebViewScreen
+      screen: MyWebViewScreen,
     },
     CreateGroup: {
-      screen: CreateGroup
-    }
+      screen: CreateGroup,
+    },
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: 'Home',
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: colors.PURPLE
+        backgroundColor: colors.PURPLE,
       },
-      headerTintColor: "#fff",
+      headerTintColor: '#fff',
       headerTitleStyle: {
-        fontWeight: "bold"
-      }
-    }
+        fontWeight: 'bold',
+      },
+    },
   }
 );
 

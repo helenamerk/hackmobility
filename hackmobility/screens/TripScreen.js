@@ -6,7 +6,7 @@ import styles from '../config/styles';
 import RenderGroupMembers from '../components/RenderGroupMembers';
 import {Card, ListItem, Icon} from 'react-native-elements';
 
-class GroupHomeScreen extends React.Component {
+class TripScreen extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
     const {params} = navigation.state;
 
@@ -28,7 +28,6 @@ class GroupHomeScreen extends React.Component {
     this.props.navigation.navigate('EndRideScreen');
   };
 
-
   travelling = () => {
     return (
       <View>
@@ -46,12 +45,8 @@ class GroupHomeScreen extends React.Component {
   };
 
   render() {
-    return (
-      <View>
-        {this.state.isReady && this.travelling}
-      </View>
-    );
+    return <View>{this.state.isReady && this.travelling}</View>;
   }
 }
 
-export default GroupHomeScreen;
+export default TripScreen;
