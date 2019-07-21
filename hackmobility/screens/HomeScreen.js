@@ -1,42 +1,42 @@
-import React from 'react';
-import styles from '../config/styles';
-import {View, Text} from 'react-native';
-import {BlueButton, InverseButton} from '../components/Button';
-import colors from '../config/colors'; // 1.0.0-beta.27
-import {getUserGroup, getGroups} from '../requests';
-import {Video} from 'expo-av';
+import React from "react";
+import styles from "../config/styles";
+import { View, Text } from "react-native";
+import { BlueButton, InverseButton } from "../components/Button";
+import colors from "../config/colors"; // 1.0.0-beta.27
+import { getUserGroup, getGroups } from "../requests";
+import { Video } from "expo-av";
 
 class HomeScreen extends React.Component {
-  static navigationOptions = ({navigation}) => {
+  static navigationOptions = ({ navigation }) => {
     return {
-      header: () => null,
+      header: () => null
     };
   };
 
   state = {
-    groupName: '',
+    groupName: ""
   };
 
   findCoordinates = () => {
-    console.log('hello');
+    console.log("hello");
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      position => {
         const location = JSON.stringify(position);
         console.log(location);
-        this.setState({location});
+        this.setState({ location });
       },
-      (error) => Alert.alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   };
 
   // reroute to login if no account found
   componentDidMount() {
     // this.findCoordinates();
-    getUserGroup().then((groupName) => {
+    getUserGroup().then(groupName => {
       if (groupName === null) {
       } else {
-        this.setState({groupName: groupName});
+        this.setState({ groupName: groupName });
       }
     });
   }
@@ -45,28 +45,28 @@ class HomeScreen extends React.Component {
     //let email = this.props.navigation.getParam('userEmail', null);
     //let password = this.props.navigation.getParam('userPassword', null);
 
-    this.props.navigation.navigate('LocationCheckScreen', {
-      groupName: this.state.groupName,
+    this.props.navigation.navigate("LocationCheckScreen", {
+      groupName: this.state.groupName
     });
   };
 
   handleGroupChangePress = () => {
-    console.log('essentially Logout');
-    this.props.navigation.navigate('GroupScreen');
+    console.log("essentially Logout");
+    this.props.navigation.navigate("GroupScreen");
   };
 
   handleNewGroup = () => {
-    this.props.navigation.navigate('CreateGroup');
+    this.props.navigation.navigate("CreateGroup");
   };
 
   render() {
-    let {navigation} = this.props;
+    let { navigation } = this.props;
     console.log(this.state.groupName);
     let currentGroup = this.state.groupName;
-    if (currentGroup === null && this.props.navigation.getParam('groupName')) {
-      currentGroup = this.props.navigation.getParam('groupName');
+    if (currentGroup === null && this.props.navigation.getParam("groupName")) {
+      currentGroup = this.props.navigation.getParam("groupName");
 
-      this.setState({groupName: currentGroup});
+      this.setState({ groupName: currentGroup });
     }
     console.log(currentGroup);
 
@@ -75,47 +75,47 @@ class HomeScreen extends React.Component {
         <View
           style={{
             flex: 2,
-            justifyContent: 'center',
-            alignSelf: 'center',
-            width: '90%',
-            height: '70%',
-            flexDirection: 'flex-end',
-            backgroundColor: colors.WHITE,
+            justifyContent: "center",
+            alignSelf: "center",
+            width: "90%",
+            height: "70%",
+            flexDirection: "flex-end",
+            backgroundColor: colors.WHITE
           }}
         >
           {!!currentGroup && (
             <Text
               style={{
-                textAlign: 'center',
+                textAlign: "center",
                 fontSize: 50,
                 letterSpacing: 5,
-                margin: 20,
+                margin: 20
               }}
             >
               {currentGroup}
             </Text>
           )}
           {!!currentGroup && (
-            <BlueButton label='Start Trip' onPress={this.handleStartPress} />
+            <BlueButton label="Start Trip" onPress={this.handleStartPress} />
           )}
           <InverseButton
-            label='Select/Change Groups'
+            label="Select/Change Groups"
             onPress={this.handleGroupChangePress}
           />
           <InverseButton
-            label='Create New Group'
+            label="Create New Group"
             onPress={this.handleNewGroup}
           />
         </View>
         <Video
-          source={require('../assets/car.mp4')}
+          source={require("../assets/car.mp4")}
           rate={1.0}
           volume={1.0}
           isMuted={false}
-          resizeMode='cover'
+          resizeMode="cover"
           shouldPlay
           isLooping
-          style={{width: '100%', height: '30%'}}
+          style={{ width: "100%", height: "30%" }}
         />
       </View>
     );

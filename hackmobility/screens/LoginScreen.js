@@ -1,43 +1,43 @@
-import * as React from 'react';
-import {Text, View, KeyboardAvoidingView} from 'react-native';
-import {BlueButton, InverseButton} from '../components/Button';
-import FormTextInput from '../components/FormTextInput';
-import GroupRenderer from '../components/GroupRenderer';
-import styles from '../config/styles';
-import {joinGroup, getGroups} from '../requests';
+import * as React from "react";
+import { Text, View, KeyboardAvoidingView } from "react-native";
+import { BlueButton, InverseButton } from "../components/Button";
+import FormTextInput from "../components/FormTextInput";
+import GroupRenderer from "../components/GroupRenderer";
+import styles from "../config/styles";
+import { joinGroup, getGroups } from "../requests";
 
 class LoginScreen extends React.Component {
-  static navigationOptions = ({navigation, navigationOptions}) => {
-    const {params} = navigation.state;
+  static navigationOptions = ({ navigation, navigationOptions }) => {
+    const { params } = navigation.state;
 
     return {
-      title: params.groupName || 'Login',
+      title: params.groupName || "Login",
       /* These values are used instead of the shared configuration! */
       headerStyle: {
-        backgroundColor: navigationOptions.headerTintColor,
+        backgroundColor: navigationOptions.headerTintColor
       },
-      headerTintColor: navigationOptions.headerStyle.backgroundColor,
+      headerTintColor: navigationOptions.headerStyle.backgroundColor
     };
   };
 
   state = {
-    userName: '',
-    password: '',
+    userName: "",
+    password: "",
     failed: false,
-    groupName: '',
+    groupName: ""
   };
 
   componentDidMount() {
-    const groupName = this.props.navigation.getParam('groupName');
-    this.setState({groupName: groupName});
+    const groupName = this.props.navigation.getParam("groupName");
+    this.setState({ groupName: groupName });
   }
 
-  handlePassengerChange = (userName) => {
-    this.setState({userName: userName});
+  handlePassengerChange = userName => {
+    this.setState({ userName: userName });
   };
 
-  handlePasswordChange = (password) => {
-    this.setState({password: password});
+  handlePasswordChange = password => {
+    this.setState({ password: password });
   };
 
   login = async () => {
@@ -45,25 +45,25 @@ class LoginScreen extends React.Component {
       this.state.userName,
       this.state.groupName,
       this.state.password
-    ).then((res) => {
+    ).then(res => {
       console.log(res);
       return res;
     });
   };
 
   handleLoginPress = () => {
-    console.log('Login button pressed');
+    console.log("Login button pressed");
 
     this.login()
-      .then((res) => {
-        this.props.navigation.navigate('Home', {
+      .then(res => {
+        this.props.navigation.navigate("Home", {
           groupName: this.state.groupName,
-          userName: this.state.userName,
+          userName: this.state.userName
         });
       })
-      .catch((err) => {
-        this.setState({failed: true});
-        console.log('login failed');
+      .catch(err => {
+        this.setState({ failed: true });
+        console.log("login failed");
         console.log(err);
       });
 
@@ -71,15 +71,15 @@ class LoginScreen extends React.Component {
   };
 
   handleNewGroupPress = () => {
-    console.log('pressed!');
+    console.log("pressed!");
   };
 
-  handleGroupNameChange = (text) => {
-    this.setState({groupName: text});
+  handleGroupNameChange = text => {
+    this.setState({ groupName: text });
   };
 
-  groupPressHandler = (groupName) => {
-    this.props.navigation.navigate('Home', {groupName: groupName});
+  groupPressHandler = groupName => {
+    this.props.navigation.navigate("Home", { groupName: groupName });
   };
 
   render() {
@@ -94,22 +94,22 @@ class LoginScreen extends React.Component {
     }
 
     return (
-      <KeyboardAvoidingView style={styles.container} behavior='padding'>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <View style={styles.form}>
           <View style={styles.formFields}>
             <FormTextInput
               value={this.state.userName}
               onChangeText={this.handlePassengerChange}
-              placeholder='Your Name'
+              placeholder="Your Name"
             />
             <FormTextInput
               value={this.state.password}
               onChangeText={this.handlePasswordChange}
-              placeholder='Password (for group)'
+              placeholder="Password (for group)"
               secureTextEntry={true}
             />
             {message}
-            <BlueButton label='Join Group' onPress={this.handleLoginPress} />
+            <BlueButton label="Join Group" onPress={this.handleLoginPress} />
           </View>
         </View>
       </KeyboardAvoidingView>

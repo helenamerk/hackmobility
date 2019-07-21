@@ -7,7 +7,7 @@ import colors from "../config/colors"; // 1.0.0-beta.27
 import { checkGroupStatus } from "../requests";
 import Storage from "../Storage";
 import Loading from "../components/Loading";
-
+import { Video } from "expo-av";
 class LocationCheckScreen extends React.Component {
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
@@ -78,16 +78,35 @@ class LocationCheckScreen extends React.Component {
         style={{
           flex: 1,
           justifyContent: "center",
+          alignItems: "center",
           alignSelf: "center",
-          width: "100%",
+          width: "80%",
+          height: "80%",
           backgroundColor: colors.WHITE
         }}
       >
         {!this.state.loading && (
-          <BlueButton
-            label="Check in location"
-            onPress={this.findCoordinates}
-          />
+          <>
+            <Video
+              source={require("../assets/location.mp4")}
+              rate={1.0}
+              volume={1.0}
+              isMuted={false}
+              resizeMode="Video.RESIZE_MODE_STRETCH"
+              shouldPlay
+              isLooping
+              style={{
+                width: "20%",
+                height: "20%",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            />
+            <BlueButton
+              label="Check in location"
+              onPress={this.findCoordinates}
+            />
+          </>
         )}
         {this.state.loading && (
           <Loading extraText="Ensuring all passengers are near vehicle." />
