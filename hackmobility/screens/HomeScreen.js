@@ -32,11 +32,11 @@ class HomeScreen extends React.Component {
   // reroute to login if no account found
   componentDidMount() {
     // this.findCoordinates();
-    this.focusListener = this.props.navigation.addListener('didFocus', () => {
-      getUserGroup().then((groupName) => {
+    this.focusListener = this.props.navigation.addListener("didFocus", () => {
+      getUserGroup().then(groupName => {
         if (groupName === null) {
         } else {
-          this.setState({groupName: groupName});
+          this.setState({ groupName: groupName });
         }
       });
     });
@@ -48,13 +48,13 @@ class HomeScreen extends React.Component {
   }
 
   handleStartPress = async () => {
-    this.props.navigation.navigate('LocationCheckScreen', {
-      groupName: this.state.groupName,
+    this.props.navigation.navigate("LocationCheckScreen", {
+      groupName: this.state.groupName
     });
   };
 
   handleGroupChangePress = () => {
-    this.props.navigation.navigate('GroupScreen');
+    this.props.navigation.navigate("GroupScreen");
   };
 
   handleNewGroup = () => {
@@ -62,12 +62,12 @@ class HomeScreen extends React.Component {
   };
 
   render() {
-    let {navigation} = this.props;
+    let { navigation } = this.props;
     let currentGroup = this.state.groupName || null;
-    if (currentGroup === null && this.props.navigation.getParam('groupName')) {
-      currentGroup = this.props.navigation.getParam('groupName');
+    if (currentGroup === null && this.props.navigation.getParam("groupName")) {
+      currentGroup = this.props.navigation.getParam("groupName");
       if (currentGroup) {
-        this.setState({groupName: currentGroup});
+        this.setState({ groupName: currentGroup });
       }
     }
 
@@ -87,9 +87,9 @@ class HomeScreen extends React.Component {
           {currentGroup === null && (
             <Text
               style={{
-                textAlign: 'center',
+                textAlign: "center",
                 fontSize: 50,
-                margin: 20,
+                margin: 20
               }}
             >
               Join or Create a Carpool Group

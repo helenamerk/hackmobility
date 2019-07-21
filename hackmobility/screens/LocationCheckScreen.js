@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import * as React from "react";
 import { Text, View, KeyboardAvoidingView, Button } from "react-native";
 import { BlueButton } from "../components/Button";
@@ -9,18 +8,6 @@ import { checkGroupStatus } from "../requests";
 import Storage from "../Storage";
 import Loading from "../components/Loading";
 import { Video } from "expo-av";
-=======
-import * as React from 'react';
-import {Text, View, KeyboardAvoidingView, Button} from 'react-native';
-import {BlueButton} from '../components/Button';
-import GroupRenderer from '../components/GroupRenderer';
-import styles from '../config/styles';
-import colors from '../config/colors'; // 1.0.0-beta.27
-import {checkGroupStatus} from '../requests';
-import Storage from '../Storage';
-import Loading from '../components/Loading';
-
->>>>>>> cfcf69de1245cce280af40224cae519648d04b2f
 class LocationCheckScreen extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
     const {params} = navigation.state;
@@ -90,7 +77,6 @@ class LocationCheckScreen extends React.Component {
       <View
         style={{
           flex: 1,
-<<<<<<< HEAD
           justifyContent: "center",
           alignItems: "center",
           alignSelf: "center",
@@ -121,19 +107,6 @@ class LocationCheckScreen extends React.Component {
               onPress={this.findCoordinates}
             />
           </>
-=======
-          justifyContent: 'center',
-          alignSelf: 'center',
-          width: '100%',
-          backgroundColor: colors.WHITE,
-        }}
-      >
-        {!this.state.loading && (
-          <BlueButton
-            label='Check in location'
-            onPress={this.findCoordinates}
-          />
->>>>>>> cfcf69de1245cce280af40224cae519648d04b2f
         )}
         {this.state.loading && (
           <Loading extraText='Ensuring all passengers are near vehicle.' />
