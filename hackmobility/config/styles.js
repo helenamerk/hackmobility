@@ -2,6 +2,14 @@ import {StyleSheet} from 'react-native';
 import colors from '../config/colors';
 
 const styles = StyleSheet.create({
+  animationContainer: {
+    flex: 1,
+    padding: 5,
+    position: 'absolute',
+    zIndex: 10,
+    left: 5,
+    top: 10,
+  },
   baseText: {
     padding: 20,
     fontWeight: 'bold',
@@ -36,6 +44,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  container_margin: {
+    flex: 1,
+    margin: 20,
+    marginTop: 40,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: '100%',
+  },
   clickable: {
     width: '100%',
     justifyContent: 'center',
@@ -68,6 +84,20 @@ const styles = StyleSheet.create({
     width: '80%',
     backgroundColor: colors.WHITE,
     paddingTop: 20,
+  },
+  buttonStyleOverride: {
+    width: 350,
+    position: 'absolute',
+    bottom: -65,
+    left: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.LIGHT_BLUE,
+    marginBottom: 12,
+    paddingVertical: 12,
+    borderRadius: 10,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(255,255,255,0.7)',
   },
   buttonStyleContainer: {
     width: '100%',
@@ -114,6 +144,21 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     height: 20,
   },
+  impressiveText: {
+    fontWeight: 'bold',
+    fontSize: 40,
+    color: colors.MISCHKA,
+    textShadowColor: colors.REAL_GREY,
+    textShadowRadius: 2,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 25,
+    justifyContent: 'center',
+    textAlign: 'center',
+    paddingBottom: 15,
+    letterSpacing: 5,
+  },
   subtitleView: {
     flex: 1,
     flexDirection: 'column',
@@ -122,7 +167,9 @@ const styles = StyleSheet.create({
   },
   subtitleText: {
     paddingLeft: 0,
-    color: colors.REAL_GREY,
+    color: colors.BLACK,
+    fontWeight: 'bold',
+    fontSize: 20,
   },
   alertText: {
     paddingLeft: 0,
@@ -133,6 +180,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'column',
     justifyContent: 'center',
+    width: '100%',
+    height: '100%',
   },
 });
 

@@ -1,34 +1,86 @@
-import * as React from "react";
-import { Text, View } from "react-native";
-import { BlueButton } from "../components/Button";
-import { getUserPoints } from "../requests";
-import colors from "../config/colors"; // 1.0.0-beta.27
+import * as React from 'react';
+import {Text, View, Alert} from 'react-native';
+import {BlueButton} from '../components/Button';
+import {getUserPoints} from '../requests';
+import colors from '../config/colors';
+import {endTrip} from '../requests';
+import Storage from '../Storage';
+import styles from '../config/styles';
+
 class EndRideScreen extends React.Component {
-  static navigationOptions = ({ navigation, navigationOptions }) => {
-    const { params } = navigation.state;
+  static navigationOptions = ({navigation, navigationOptions}) => {
+    const {params} = navigation.state;
 
     return {
-      title: "Ride Summary",
+      header: () => null,
       /* These values are used instead of the shared configuration! */
-      headerStyle: {
-        backgroundColor: navigationOptions.headerTintColor
-      },
-      headerTintColor: navigationOptions.headerStyle.backgroundColor
     };
   };
 
   state = {
-    points: "loading..."
+    loading: true,
+    data: {},
   };
   handleTripComplete = () => {
-    this.props.navigation.navigate("Home");
+    this.props.navigation.navigate('Home');
   };
+
+  findCoordinates = async () => {
+    return navigator.geolocation.getCurrentPosition(
+      (location) => {
+        return location;
+      },
+      (error) => Alert.alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+  };
+
+  findCoordinates = (user_name) => {
+    this.setState({loading: true});
+    navigator.geolocation.getCurrentPosition(
+      (location) => {
+        console.log(location);
+        this.setState({location: location});
+        endTrip(location, user_name).then((res) => {
+          res.emission = this.calculateEmissions(res.distance);
+          res.time = this.msToTime(res.time);
+          this.setState({loading: !res.result});
+          this.setState({data: res});
+          console.log(res);
+        });
+      },
+      (error) => Alert.alert(error.message),
+      {enableHighAccuracy: false, timeout: 0, maximumAge: 1000}
+    );
+  };
+
+  msToTime = (s) => {
+    var ms = s % 1000;
+    s = (s - ms) / 1000;
+    var secs = s % 60;
+    s = (s - secs) / 60;
+    var mins = s % 60;
+    var hrs = (s - mins) / 60;
+
+    return hrs + ':' + mins + ':' + secs + '.' + ms;
+  };
+
   componentDidMount = () => {
-    console.log("?");
-    getUserPoints().then(points => {
-      console.log(points);
-      this.setState({ points: points });
-    });
+    console.log('?');
+    Storage.getItem('user_name')
+      .then((user_name) => {
+        console.log(user_name);
+        this.findCoordinates(user_name);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  calculateEmissions = (meter) => {
+    const ratio = 251; // 251 gram CO2 per km
+    const users = this.props.navigation.getParam('users');
+    return ((ratio * meter) / 1000) * (users.length - 1);
   };
 
   // TOOD: implement heremaps
@@ -70,21 +122,34 @@ class EndRideScreen extends React.Component {
   render() {
     return (
       <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignSelf: "center",
-          width: "100%",
-          backgroundColor: colors.WHITE
-        }}
+        style={[
+          styles.container_margin,
+          {alignItems: 'flex-start', alignContent: 'flex-start'},
+        ]}
       >
-        <Text>Thank you for riding with our app</Text>
-        <Text>Points Earned: {this.state.points} kudos Points</Text>
-        <BlueButton
-          onPress={this.handleTripComplete}
-          label="Return Home"
-          style={{ padding: 10 }}
-        />
+        <Text style={styles.title}>Ride Summary</Text>
+        {!this.state.loading && (
+          <>
+            <Text style={styles.subtitleText}>
+              Distance Driven (km): {this.state.data.distance / 1000} redeembale
+              points!
+            </Text>
+            <Text style={styles.subtitleText}>
+              Time of Journey: {this.state.data.time}.
+            </Text>
+            <Text style={styles.subtitleText}>
+              Points Earned: {this.state.data.points} redeemable points!
+            </Text>
+            <Text style={styles.subtitleText}>
+              You saved {this.state.data.emission} grams of CO2 by carpooling!
+            </Text>
+            <BlueButton
+              onPress={this.handleTripComplete}
+              label='Return Home'
+              style={{padding: 10}}
+            />
+          </>
+        )}
       </View>
     );
   }

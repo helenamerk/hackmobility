@@ -1,16 +1,17 @@
 import React from 'react';
-
 import {createStackNavigator, createAppContainer} from 'react-navigation'; // 1.0.0-beta.27
+
+import colors from './config/colors';
+
+import TripScreen from './screens/TripScreen';
+import EndRideScreen from './screens/EndRideScreen';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import GroupScreen from './screens/GroupScreen';
 import LocationCheckScreen from './screens/LocationCheckScreen';
-import TripScreen from './screens/TripScreen';
-import EndRideScreen from './screens/EndRideScreen';
-import colors from './config/colors';
-
 import MyWebViewScreen from './screens/MyWebViewScreen';
 import CreateGroup from './screens/CreateGroup';
+import Rewards from './screens/Rewards';
 
 const MainStack = createStackNavigator(
   {
@@ -53,7 +54,25 @@ const MainStack = createStackNavigator(
   }
 );
 
-const AppContainer = createAppContainer(MainStack);
+const RootStack = createStackNavigator(
+  {
+    Main: {
+      screen: MainStack,
+    },
+    Rewards: {
+      screen: Rewards,
+    },
+    MyWebViewModal: {
+      screen: MyWebViewScreen,
+    },
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
 
 export default class App extends React.Component {
   render() {

@@ -1,8 +1,7 @@
 import * as React from 'react';
 import {Text, View, KeyboardAvoidingView, Button} from 'react-native';
-import {BlueButton, InverseButton} from '../components/Button';
+import {OverrideButton} from '../components/Button';
 import GroupRenderer from '../components/GroupRenderer';
-import styles from '../config/styles';
 import RenderGroupMembers from '../components/RenderGroupMembers';
 import {Card, ListItem, Icon} from 'react-native-elements';
 import {getUsersInGroup} from '../requests';
@@ -13,32 +12,34 @@ class TripScreen extends React.Component {
     const {params} = navigation.state;
 
     return {
-      title: 'Your Trip Details',
+      header: () => null,
       /* These values are used instead of the shared configuration! */
-      headerStyle: {
-        backgroundColor: navigationOptions.headerTintColor,
-      },
-      headerTintColor: navigationOptions.headerStyle.backgroundColor,
     };
   };
 
   state = {
-    loading: true,
+    loading: false,
+    users: [],
   };
 
   componentDidMount = () => {
-    getUsersInGroup(this.props.navigation.getParam('groupName')).then(
-      (group_members) => {
-        console.log(group_members);
-        this.setState({loading: false});
-        this.setState({group_members: group_members});
-      }
-    );
+    console.log(this.props.navigation.getParam('group_name'));
+    const users = this.props.navigation.getParam('users');
+    console.log(users);
+    this.setState({users: users});
+    // getUsersInGroup(this.props.navigation.getParam('group_name')).then(
+    //   (users) => {
+    //     console.log(users);
+    //     this.setState({loading: false});
+    //     this.setState({users: users});
+    //   }
+    // );
   };
 
   HandleEndRide = async () => {
     this.props.navigation.navigate('EndRideScreen', {
       userName: this.props.navigation.getParam('userName'),
+      users: this.state.users,
     });
   };
 
@@ -46,15 +47,11 @@ class TripScreen extends React.Component {
     return (
       <View>
         {!this.state.loading && (
-          <View>
-            <Card title='Travelling with you' style={{height: 30}}>
-              <RenderGroupMembers groupMembers={this.state.group_members} />
+          <View style={{position: 'absolute', top: 50, width: '100%'}}>
+            <Card title='Travelling with you' containerStyle={{padding: 40}}>
+              <RenderGroupMembers groupMembers={this.state.users} />
             </Card>
-            <BlueButton
-              label='End Ride'
-              onPress={this.HandleEndRide}
-              style={{padding: 10}}
-            />
+            <OverrideButton label='End Ride' onPress={this.HandleEndRide} />
           </View>
         )}
         {this.state.loading && (

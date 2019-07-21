@@ -52,12 +52,8 @@ class LoginScreen extends React.Component {
   };
 
   handleLoginPress = () => {
-    console.log('Login button pressed');
-
     this.login()
       .then((res) => {
-        console.log('LOGGED IN WITH:');
-        console.log(this.state.userName);
         this.props.navigation.navigate('Home', {
           groupName: this.state.groupName,
           userName: this.state.userName,

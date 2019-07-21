@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import styles from '../config/styles';
 import {Video} from 'expo-av';
+import colors from '../config/colors';
 
 class Loading extends Component {
   state = {};
@@ -17,7 +18,12 @@ class Loading extends Component {
           resizeMode='cover'
           shouldPlay
           isLooping
-          style={{width: '100%', height: '30%'}}
+          style={{
+            width: '100%',
+            height: '40%',
+            bottom: 0,
+            position: 'absolute',
+          }}
         />
       </View>
     );

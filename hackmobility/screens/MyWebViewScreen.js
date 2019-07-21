@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {WebView} from 'react-native';
+import {WebView, Button} from 'react-native';
 
 class MyWebViewScreen extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
@@ -12,6 +12,13 @@ class MyWebViewScreen extends React.Component {
         backgroundColor: navigationOptions.headerTintColor,
       },
       headerTintColor: navigationOptions.headerStyle.backgroundColor,
+      headerRight: (
+        <Button
+          onPress={() => navigation.navigate('Home')}
+          title='Done'
+          color='#000'
+        />
+      ),
     };
   };
 

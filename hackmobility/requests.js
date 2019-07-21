@@ -30,6 +30,30 @@ export const getUserPoints = async () => {
   });
 };
 
+export const redeemPoints = async (user_name, vendor) => {
+  return fetch(servername + '/useUserPoints', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      user_name: user_name,
+    }),
+  })
+    .then((res) => {
+      console.log(res);
+      return res.json().then((final) => {
+        console.log(final);
+        return final.Points[0];
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      return false;
+    });
+};
+
 export const getUserGroup = async () => {
   return Storage.getItem('user_name').then((user_name) => {
     if (user_name == null) {
@@ -83,6 +107,31 @@ export const checkGroupStatus = async ({coords}, user_name) => {
     });
 };
 
+export const endTrip = async ({coords}, user_name) => {
+  return fetch(servername + '/Squidward', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      user_name: user_name,
+      user_lat: coords.latitude,
+      user_lon: coords.longitude,
+    }),
+  })
+    .then((res) => {
+      console.log(res);
+      return res.json().then((final) => {
+        return final;
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      return false;
+    });
+};
+
 export const joinGroup = async (user_name, groupName, password) => {
   console.log(user_name, groupName, password);
   return fetch(servername + '/joinGroup', {
@@ -97,9 +146,13 @@ export const joinGroup = async (user_name, groupName, password) => {
       group_pass: password,
     }),
   }).then((res) => {
-    console.log(res);
-    Storage.setItem('user_name', user_name);
-    return true;
+    if (res.status == 200) {
+      console.log(res);
+      Storage.setItem('user_name', user_name);
+      return true;
+    } else {
+      return false;
+    }
   });
 };
 

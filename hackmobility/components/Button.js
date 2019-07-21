@@ -6,7 +6,18 @@ export class BlueButton extends React.Component {
   render() {
     const {label, onPress} = this.props;
     return (
-      <TouchableOpacity style={styles.buttonStyleContainer} onPress={onPress}>
+      <TouchableOpacity style={[styles.buttonStyleContainer]} onPress={onPress}>
+        <Text style={styles.buttonStyleText}>{label}</Text>
+      </TouchableOpacity>
+    );
+  }
+}
+
+export class OverrideButton extends React.Component {
+  render() {
+    const {label, onPress} = this.props;
+    return (
+      <TouchableOpacity style={[styles.buttonStyleOverride]} onPress={onPress}>
         <Text style={styles.buttonStyleText}>{label}</Text>
       </TouchableOpacity>
     );
@@ -31,7 +42,6 @@ export class PreviewButton extends React.Component {
   render() {
     const limit = this.props.limit;
     if (this.props.story.length < limit && this.props.story.length > 0) {
-      console.log(this.props.story.length);
       return <BlueButton label='Preview' onPress={this.props.onPress} />;
     } else {
       return null;

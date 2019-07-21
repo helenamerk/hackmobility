@@ -7,6 +7,7 @@ const colors = {
   SILVER: '#BEBEBE',
   TORCH_RED: '#F8262F',
   MISCHKA: '#E5E4E6',
+  GREEN: '#31C98B',
   GREY: '#666699',
   REAL_GREY: '#666666',
 };

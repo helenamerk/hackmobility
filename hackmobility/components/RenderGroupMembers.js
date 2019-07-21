@@ -6,6 +6,7 @@ import {Card, ListItem, Button, Icon} from 'react-native-elements';
 class renderGroupMembers extends Component {
   render() {
     const renderGroupMember = ({item, index}) => {
+      console.log(item);
       return (
         <ListItem
           key={index}

@@ -1,44 +1,47 @@
 import React from 'react';
-import styles from '../config/styles';
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity, Alert} from 'react-native';
 import {BlueButton, InverseButton} from '../components/Button';
-import colors from '../config/colors'; // 1.0.0-beta.27
-import {getUserGroup, getGroups} from '../requests';
 import {Video} from 'expo-av';
+import Lottie from 'lottie-react-native';
+
+import colors from '../config/colors';
+import styles from '../config/styles';
+
+import {getUserGroup, getUsersInGroup} from '../requests';
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
     return {
       header: () => null,
+      /* These values are used instead of the shared configuration! */
     };
   };
 
   state = {
     groupName: '',
+    users: [],
   };
 
-  findCoordinates = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const location = JSON.stringify(position);
-        this.setState({location});
-      },
-      (error) => Alert.alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
+  resetAnimation = () => {
+    this.animation.reset();
+    this.animation.play();
   };
 
   // reroute to login if no account found
   componentDidMount() {
-    // this.findCoordinates();
     this.focusListener = this.props.navigation.addListener('didFocus', () => {
       getUserGroup().then((groupName) => {
         if (groupName === null) {
+          console.log('no group name');
         } else {
           this.setState({groupName: groupName});
+          getUsersInGroup(groupName).then((users) => {
+            this.setState({users: users});
+          });
         }
       });
     });
+    this.animation.play();
   }
 
   componentWillUnmount() {
@@ -47,9 +50,17 @@ class HomeScreen extends React.Component {
   }
 
   handleStartPress = async () => {
-    this.props.navigation.navigate('LocationCheckScreen', {
-      groupName: this.state.groupName,
-    });
+    if (this.state.users.length >= 2) {
+      console.log(this.state.users.length);
+      this.props.navigation.navigate('LocationCheckScreen', {
+        groupName: this.state.groupName,
+        users: this.state.users,
+      });
+    } else {
+      Alert.alert(
+        'You have to have at least 1 passenger to earn rewards for your trip!'
+      );
+    }
   };
 
   handleGroupChangePress = () => {
@@ -60,18 +71,39 @@ class HomeScreen extends React.Component {
     this.props.navigation.navigate('CreateGroup');
   };
 
+  onTrophyPress = () => {
+    console.log('HELLO WORLD');
+    this.props.navigation.navigate('Rewards');
+  };
+
   render() {
     let {navigation} = this.props;
     let currentGroup = this.state.groupName || null;
-    if (currentGroup === null && this.props.navigation.getParam('groupName')) {
-      currentGroup = this.props.navigation.getParam('groupName');
-      if (currentGroup) {
-        this.setState({groupName: currentGroup});
-      }
-    }
+    // if (currentGroup === null && this.props.navigation.getParam('groupName')) {
+    //   currentGroup = this.props.navigation.getParam('groupName');
+    //   if (currentGroup) {
+    //     this.setState({groupName: currentGroup});
+    //   }
+    // }
 
     return (
       <View style={styles.container}>
+        <TouchableOpacity
+          style={styles.animationContainer}
+          onPress={this.onTrophyPress}
+        >
+          <Lottie
+            ref={(animation) => {
+              this.animation = animation;
+            }}
+            style={{
+              width: 50,
+              height: 50,
+              backgroundColor: '#fff',
+            }}
+            source={require('../assets/rewards.json')}
+          />
+        </TouchableOpacity>
         <View
           style={{
             flex: 2,
@@ -84,28 +116,9 @@ class HomeScreen extends React.Component {
           }}
         >
           {currentGroup === null && (
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 50,
-                margin: 20,
-              }}
-            >
-              Join or Create a Carpool Group
-            </Text>
+            <Text style={styles.title}>Join or Create a Carpool Group</Text>
           )}
-          {!!currentGroup && (
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 50,
-                letterSpacing: 5,
-                margin: 20,
-              }}
-            >
-              {currentGroup}
-            </Text>
-          )}
+          {!!currentGroup && <Text style={styles.title}>{currentGroup}</Text>}
           {!!currentGroup && (
             <BlueButton label='Start Trip' onPress={this.handleStartPress} />
           )}

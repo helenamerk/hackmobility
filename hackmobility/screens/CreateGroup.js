@@ -24,6 +24,7 @@ class CreateGroup extends React.Component {
     failed: false,
     newGroupName: '',
     password: '',
+    userName: '',
   };
 
   componentDidMount() {}
@@ -36,6 +37,10 @@ class CreateGroup extends React.Component {
     this.setState({password: password});
   };
 
+  handleNameChange = (userName) => {
+    this.setState({userName: userName});
+  };
+
   handleNewGroupPress = () => {
     const openUrl = (authURL) => {
       console.log(authURL);
@@ -43,7 +48,13 @@ class CreateGroup extends React.Component {
     };
     startSmartcarAuth(this.state.newGroupName, this.state.password).then(
       (authURL) => {
-        console.log('helps');
+        joinGroup(
+          this.state.userName,
+          this.state.newGroupName,
+          this.state.password
+        ).then((res) => {
+          console.log('joined!');
+        });
         openUrl(authURL);
       }
     );
@@ -73,6 +84,11 @@ class CreateGroup extends React.Component {
               onChangeText={this.handlePasswordChange}
               placeholder='Password (for group)'
               secureTextEntry={true}
+            />
+            <FormTextInput
+              value={this.state.handleNameChange}
+              onChangeText={this.handleNameChange}
+              placeholder='Your Name (as a passenger)'
             />
             <BlueButton
               label='Create Group'
