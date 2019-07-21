@@ -5,13 +5,14 @@ import GroupRenderer from '../components/GroupRenderer';
 import styles from '../config/styles';
 import RenderGroupMembers from '../components/RenderGroupMembers';
 import {Card, ListItem, Icon} from 'react-native-elements';
+import {getUsersInGroup} from '../requests';
 
 class TripScreen extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
     const {params} = navigation.state;
 
     return {
-      title: 'GroupHome',
+      title: 'Your Trip Details',
       /* These values are used instead of the shared configuration! */
       headerStyle: {
         backgroundColor: navigationOptions.headerTintColor,
@@ -21,31 +22,42 @@ class TripScreen extends React.Component {
   };
 
   state = {
-    isReady: false,
+    loading: true,
   };
 
-  HandleEndRide = async () => {
-    this.props.navigation.navigate('EndRideScreen');
-  };
-
-  travelling = () => {
-    return (
-      <View>
-        <Text>GroupHome</Text>
-        <Card title='Travelling with you' style={{height: 30}}>
-          <RenderGroupMembers />
-        </Card>
-        <BlueButton
-          label='end of ride'
-          onPress={this.HandleEndRide}
-          style={{padding: 10}}
-        />
-      </View>
+  componentDidMount = () => {
+    getUsersInGroup(this.props.navigation.getParam('groupName')).then(
+      (group_members) => {
+        console.log(group_members);
+        this.setState({loading: false});
+        this.setState({group_members: group_members});
+      }
     );
   };
 
+  HandleEndRide = async () => {
+    this.props.navigation.navigate('EndRideScreen', {
+      userName: this.props.navigation.getParam('userName'),
+    });
+  };
+
   render() {
-    return <View>{this.state.isReady && this.travelling}</View>;
+    return (
+      <View>
+        {!this.state.loading && (
+          <View>
+            <Card title='Travelling with you' style={{height: 30}}>
+              <RenderGroupMembers groupMembers={this.state.group_members} />
+            </Card>
+            <BlueButton
+              label='end of ride'
+              onPress={this.HandleEndRide}
+              style={{padding: 10}}
+            />
+          </View>
+        )}
+      </View>
+    );
   }
 }
 

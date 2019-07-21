@@ -11,6 +11,7 @@ export const getGroups = async () => {
 };
 
 export const getUserPoints = async () => {
+  console.log('getUserPoints');
   return Storage.getItem('user_name').then((user_name) => {
     if (user_name == null) {
       console.log(user_name);
@@ -21,8 +22,8 @@ export const getUserPoints = async () => {
     return fetch(servername + '/getUserPoints?user_name=' + user_name).then(
       (user_points) => {
         return user_points.json().then((final) => {
-          console.log(final.UserPoints);
-          return final.UserPoints;
+          console.log(final.Points);
+          return final.Points[0];
         });
       }
     );
@@ -32,11 +33,8 @@ export const getUserPoints = async () => {
 export const getUserGroup = async () => {
   return Storage.getItem('user_name').then((user_name) => {
     if (user_name == null) {
-      console.log(user_name);
       return null;
     }
-    console.log('USER NAME');
-    console.log(user_name);
     return fetch(servername + '/getUserGroup?user_name=' + user_name).then(
       (group_name) => {
         return group_name.json().then((final) => {
@@ -48,9 +46,18 @@ export const getUserGroup = async () => {
   });
 };
 
+export const getUsersInGroup = async (group_name) => {
+  return fetch(servername + '/getUsersInGroup?group_name=' + group_name).then(
+    (user_list) => {
+      return user_list.json().then((final) => {
+        console.log(final.Users);
+        return final.Users;
+      });
+    }
+  );
+};
+
 export const checkGroupStatus = async ({coords}, user_name) => {
-  console.log(user_name);
-  console.log(coords);
   return fetch(servername + '/Spongebob', {
     method: 'POST',
     headers: {

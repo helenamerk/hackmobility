@@ -30,18 +30,18 @@ class LocationCheckScreen extends React.Component {
 
   componentDidMount = () => {
     Storage.getItem('user_name').then((res) => {
-      console.log('help me');
       console.log(res);
       this.setState({user_name: res});
     });
   };
 
   continueChecking = () => {
+    const groupName = this.props.navigation.getParam('groupName');
     checkGroupStatus(this.state.location, this.state.user_name).then((res) => {
       if (res) {
         clearInterval(this.state.timeoutid);
         this.setState({loading: false});
-        this.props.navigation.navigate('TripScreen');
+        this.props.navigation.navigate('TripScreen', {groupName: groupName});
       } else {
         console.log('sad');
       }

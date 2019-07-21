@@ -44,7 +44,9 @@ class HomeScreen extends React.Component {
     //let email = this.props.navigation.getParam('userEmail', null);
     //let password = this.props.navigation.getParam('userPassword', null);
 
-    this.props.navigation.navigate('LocationCheckScreen');
+    this.props.navigation.navigate('LocationCheckScreen', {
+      groupName: this.state.groupName,
+    });
   };
 
   handleGroupChangePress = () => {
@@ -60,8 +62,8 @@ class HomeScreen extends React.Component {
     let {navigation} = this.props;
     console.log(this.state.groupName);
     let currentGroup = this.state.groupName;
-    if (currentGroup === null && this.props.navigation.getParams('groupName')) {
-      currentGroup = this.props.navigation.getParams('groupName');
+    if (currentGroup === null && this.props.navigation.getParam('groupName')) {
+      currentGroup = this.props.navigation.getParam('groupName');
 
       this.setState({groupName: currentGroup});
     }
