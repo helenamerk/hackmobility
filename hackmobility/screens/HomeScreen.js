@@ -18,11 +18,9 @@ class HomeScreen extends React.Component {
   };
 
   findCoordinates = () => {
-    console.log('hello');
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const location = JSON.stringify(position);
-        console.log(location);
         this.setState({location});
       },
       (error) => Alert.alert(error.message),
@@ -33,25 +31,28 @@ class HomeScreen extends React.Component {
   // reroute to login if no account found
   componentDidMount() {
     // this.findCoordinates();
-    getUserGroup().then((groupName) => {
-      if (groupName === null) {
-      } else {
-        this.setState({groupName: groupName});
-      }
+    this.focusListener = this.props.navigation.addListener('didFocus', () => {
+      getUserGroup().then((groupName) => {
+        if (groupName === null) {
+        } else {
+          this.setState({groupName: groupName});
+        }
+      });
     });
   }
 
-  handleStartPress = async () => {
-    //let email = this.props.navigation.getParam('userEmail', null);
-    //let password = this.props.navigation.getParam('userPassword', null);
+  componentWillUnmount() {
+    // Remove the event listener
+    this.focusListener.remove();
+  }
 
+  handleStartPress = async () => {
     this.props.navigation.navigate('LocationCheckScreen', {
       groupName: this.state.groupName,
     });
   };
 
   handleGroupChangePress = () => {
-    console.log('essentially Logout');
     this.props.navigation.navigate('GroupScreen');
   };
 
@@ -61,14 +62,13 @@ class HomeScreen extends React.Component {
 
   render() {
     let {navigation} = this.props;
-    console.log(this.state.groupName);
-    let currentGroup = this.state.groupName;
+    let currentGroup = this.state.groupName || null;
     if (currentGroup === null && this.props.navigation.getParam('groupName')) {
       currentGroup = this.props.navigation.getParam('groupName');
-
-      this.setState({groupName: currentGroup});
+      if (currentGroup) {
+        this.setState({groupName: currentGroup});
+      }
     }
-    console.log(currentGroup);
 
     return (
       <View style={styles.container}>
@@ -83,6 +83,17 @@ class HomeScreen extends React.Component {
             backgroundColor: colors.WHITE,
           }}
         >
+          {currentGroup === null && (
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 50,
+                margin: 20,
+              }}
+            >
+              Join or Create a Carpool Group
+            </Text>
+          )}
           {!!currentGroup && (
             <Text
               style={{

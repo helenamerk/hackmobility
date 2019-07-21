@@ -43,7 +43,7 @@ const MainStack = createStackNavigator(
     initialRouteName: 'Home',
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: colors.PURPLE,
+        backgroundColor: colors.BLACK,
       },
       headerTintColor: '#fff',
       headerTitleStyle: {

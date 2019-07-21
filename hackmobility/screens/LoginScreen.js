@@ -4,7 +4,7 @@ import {BlueButton, InverseButton} from '../components/Button';
 import FormTextInput from '../components/FormTextInput';
 import GroupRenderer from '../components/GroupRenderer';
 import styles from '../config/styles';
-import {joinGroup, getGroups} from '../requests';
+import {joinGroup} from '../requests';
 
 class LoginScreen extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
@@ -56,6 +56,8 @@ class LoginScreen extends React.Component {
 
     this.login()
       .then((res) => {
+        console.log('LOGGED IN WITH:');
+        console.log(this.state.userName);
         this.props.navigation.navigate('Home', {
           groupName: this.state.groupName,
           userName: this.state.userName,
