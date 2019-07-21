@@ -4,6 +4,8 @@ import {createStackNavigator, createAppContainer} from 'react-navigation'; // 1.
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import GroupScreen from './screens/GroupScreen';
+import MyWebViewScreen from './screens/MyWebViewScreen';
+import CreateGroup from './screens/CreateGroup';
 
 import colors from './config/colors';
 
@@ -17,6 +19,12 @@ const MainStack = createStackNavigator(
     },
     LoginScreen: {
       screen: LoginScreen,
+    },
+    MyWebViewScreen: {
+      screen: MyWebViewScreen,
+    },
+    CreateGroup: {
+      screen: CreateGroup,
     },
   },
   {
