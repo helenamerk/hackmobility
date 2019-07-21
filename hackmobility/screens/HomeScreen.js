@@ -1,39 +1,39 @@
-import React from 'react';
-import styles from '../config/styles';
-import {Button, View, Text} from 'react-native';
-import {BlueButton, InverseButton} from '../components/Button';
-import colors from '../config/colors'; // 1.0.0-beta.27
-import {getUserGroup, getGroups} from '../requests';
-
+import React from "react";
+import styles from "../config/styles";
+import { Button, View, Text } from "react-native";
+import { BlueButton, InverseButton } from "../components/Button";
+import colors from "../config/colors"; // 1.0.0-beta.27
+import { getUserGroup, getGroups } from "../requests";
+import Loading from "../components/Loading";
 class HomeScreen extends React.Component {
-  static navigationOptions = ({navigation}) => {
+  static navigationOptions = ({ navigation }) => {
     return {
-      header: () => null,
+      header: () => null
     };
   };
 
   state = {
-    groupName: '',
+    groupName: ""
   };
 
   findCoordinates = () => {
-    console.log('hello');
+    console.log("hello");
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      position => {
         const location = JSON.stringify(position);
         console.log(location);
-        this.setState({location});
+        this.setState({ location });
       },
-      (error) => Alert.alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      error => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   };
 
   // reroute to login if no account found
   componentDidMount() {
-    let {navigation} = this.props;
+    let { navigation } = this.props;
     console.log(getUserGroup());
-    this.findCoordinates();
+    // this.findCoordinates();
     // getUserGroup().then((groupName) => {
     //   if (!groupName) {
     //     this.props.navigation.navigate('LoginScreen');
@@ -47,28 +47,29 @@ class HomeScreen extends React.Component {
     //let email = this.props.navigation.getParam('userEmail', null);
     //let password = this.props.navigation.getParam('userPassword', null);
 
-    this.props.navigation.navigate('RideStatus');
+    this.props.navigation.navigate("LocationCheckScreen");
   };
 
   handleGroupChangePress = () => {
-    console.log('essentially Logout');
+    console.log("essentially Logout");
     const groups = getGroups();
-    this.props.navigation.navigate('GroupScreen');
+    this.props.navigation.navigate("GroupScreen");
   };
 
   render() {
-    let {navigation} = this.props;
+    let { navigation } = this.props;
 
     let currentGroup = getUserGroup();
 
     return (
       <View style={styles.container}>
+    
         <Text>{currentGroup}</Text>
         <View style={styles.form}>
           <View style={styles.formFields}>
-            <BlueButton label='Start' onPress={this.handleStartPress} />
+            <BlueButton label="Start" onPress={this.handleStartPress} />
             <InverseButton
-              label='Change Groups'
+              label="Change Groups"
               onPress={this.handleGroupChangePress}
             />
           </View>
