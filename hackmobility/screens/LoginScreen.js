@@ -2,7 +2,9 @@ import * as React from 'react';
 import {Text, View, KeyboardAvoidingView} from 'react-native';
 import {BlueButton, InverseButton} from '../components/Button';
 import FormTextInput from '../components/FormTextInput';
+import GroupRenderer from '../components/GroupRenderer';
 import styles from '../config/styles';
+import {setGroup, getGroups} from '../requests';
 
 class LoginScreen extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
@@ -19,7 +21,14 @@ class LoginScreen extends React.Component {
     passengerName: '',
     password: '',
     failed: false,
+    groups: [],
   };
+
+  componentDidMount() {
+    console.log(getGroups());
+    let groups = getGroups();
+    this.setState({groups: groups});
+  }
 
   handlePassengerChange = (passengerName) => {
     this.setState({passengerName: passengerName});
@@ -29,8 +38,8 @@ class LoginScreen extends React.Component {
     this.setState({password: password});
   };
 
-  login = (passengerName) => {
-    return setGroup(passengerName);
+  login = async () => {
+    return setGroup(this.state.groupId);
   };
 
   handleLoginPress = () => {
@@ -51,6 +60,14 @@ class LoginScreen extends React.Component {
 
   handleNewGroupPress = () => {
     console.log('pressed!');
+  };
+
+  handleGroupNameChange = (text) => {
+    this.setState({groupName: text});
+  };
+
+  groupPressHandler = (groupId) => {
+    this.props.navigation.navigate('Home', {groupId: groupId});
   };
 
   render() {
@@ -74,19 +91,20 @@ class LoginScreen extends React.Component {
               placeholder='Your Name'
             />
             <FormTextInput
-              value='test'
-              placeholder='Group Name (replace with select)'
+              value={this.state.groupName}
+              onChangeText={this.handleGroupNameChange}
+              placeholder='Group Name'
             />
             <FormTextInput
               value={this.state.password}
               onChangeText={this.handlePasswordChange}
-              placeholder='password'
+              placeholder='Password (for group)'
               secureTextEntry={true}
             />
             {message}
-            <InverseButton label='Join Group' onPress={this.handleLoginPress} />
+            <BlueButton label='Join Group' onPress={this.handleLoginPress} />
             <InverseButton
-              label='Create Account'
+              label='Create Group'
               onPress={this.handleNewGroupPress}
             />
           </View>

@@ -16,10 +16,24 @@ class HomeScreen extends React.Component {
     groupName: '',
   };
 
+  findCoordinates = () => {
+    console.log('hello');
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const location = JSON.stringify(position);
+        console.log(location);
+        this.setState({location});
+      },
+      (error) => Alert.alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+  };
+
   // reroute to login if no account found
   componentDidMount() {
     let {navigation} = this.props;
     console.log(getUserGroup());
+    this.findCoordinates();
     // getUserGroup().then((groupName) => {
     //   if (!groupName) {
     //     this.props.navigation.navigate('LoginScreen');
@@ -51,7 +65,7 @@ class HomeScreen extends React.Component {
         <Text>{currentGroup}</Text>
         <View style={styles.form}>
           <View style={styles.formFields}>
-            <InverseButton label='Start' onPress={this.handleStartPress} />
+            <BlueButton label='Start' onPress={this.handleStartPress} />
             <InverseButton
               label='Change Groups'
               onPress={this.handleGroupChangePress}

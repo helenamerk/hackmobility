@@ -1,11 +1,12 @@
-export const getGroups = function(timestamp) {
+export const getGroups = () => {
+  console.log('hmmm');
   return ['Smartcar', 'Shell', 'Hello', 'Here Maps'];
 };
 
-export const getUserGroup = function() {
+export const getUserGroup = () => {
   return 'My Group returned here';
 };
 
-export const setGroup = function(groupName) {
+export const setGroup = (groupName) => {
   return 'this will work lol' + groupName;
 };
