@@ -6,6 +6,7 @@ import styles from '../config/styles';
 import RenderGroupMembers from '../components/RenderGroupMembers';
 import {Card, ListItem, Icon} from 'react-native-elements';
 import {getUsersInGroup} from '../requests';
+import Loading from '../components/Loading';
 
 class TripScreen extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
@@ -55,6 +56,9 @@ class TripScreen extends React.Component {
               style={{padding: 10}}
             />
           </View>
+        )}
+        {this.state.loading && (
+          <Loading extraText='Waiting for all passengers to confirm...' />
         )}
       </View>
     );
