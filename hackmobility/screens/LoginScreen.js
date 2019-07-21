@@ -11,9 +11,12 @@ class LoginScreen extends React.Component {
     const {params} = navigation.state;
 
     return {
-      title: '',
+      title: params.groupName || 'Login',
       /* These values are used instead of the shared configuration! */
-      header: null,
+      headerStyle: {
+        backgroundColor: navigationOptions.headerTintColor,
+      },
+      headerTintColor: navigationOptions.headerStyle.backgroundColor,
     };
   };
 
@@ -21,13 +24,13 @@ class LoginScreen extends React.Component {
     passengerName: '',
     password: '',
     failed: false,
-    groups: [],
+    groupName: '',
   };
 
   componentDidMount() {
     console.log(getGroups());
-    let groups = getGroups();
-    this.setState({groups: groups});
+    const groupName = this.props.navigation.getParam('groupName');
+    this.setState({groupName: groupName});
   }
 
   handlePassengerChange = (passengerName) => {
@@ -39,7 +42,7 @@ class LoginScreen extends React.Component {
   };
 
   login = async () => {
-    return setGroup(this.state.groupId);
+    return setGroup(this.state.groupName);
   };
 
   handleLoginPress = () => {
@@ -66,8 +69,8 @@ class LoginScreen extends React.Component {
     this.setState({groupName: text});
   };
 
-  groupPressHandler = (groupId) => {
-    this.props.navigation.navigate('Home', {groupId: groupId});
+  groupPressHandler = (groupName) => {
+    this.props.navigation.navigate('Home', {groupName: groupName});
   };
 
   render() {
@@ -91,11 +94,6 @@ class LoginScreen extends React.Component {
               placeholder='Your Name'
             />
             <FormTextInput
-              value={this.state.groupName}
-              onChangeText={this.handleGroupNameChange}
-              placeholder='Group Name'
-            />
-            <FormTextInput
               value={this.state.password}
               onChangeText={this.handlePasswordChange}
               placeholder='Password (for group)'
@@ -103,10 +101,6 @@ class LoginScreen extends React.Component {
             />
             {message}
             <BlueButton label='Join Group' onPress={this.handleLoginPress} />
-            <InverseButton
-              label='Create Group'
-              onPress={this.handleNewGroupPress}
-            />
           </View>
         </View>
       </KeyboardAvoidingView>

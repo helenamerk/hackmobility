@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.WHITE,
     marginBottom: 12,
     paddingVertical: 12,
+    padding: 12,
     borderRadius: 4,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: colors.BLUE,

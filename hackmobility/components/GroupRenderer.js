@@ -42,27 +42,27 @@ class GroupRenderer extends Component {
 
   render() {
     // const { navigate } = this.props.navigation;
+    console.log('_--------');
     console.log(this.props.GROUPS);
     const renderGroups = ({item, index}) => {
       return (
         <ListItem
           key={index}
-          title={item.name}
+          title={item}
           hideChevron={true}
-          onPress={this.props.onPress}
+          onPress={() => this.props.onPress(item)}
           // leftAvatar={{ source: require("./images/uthappizza.png") }}
         />
       );
     };
 
     return (
-      <Card title='Groups:'>
-        <ScrollView>
+      <Card title='Select Carpool Group'>
+        <ScrollView style={{height: 350}}>
           <FlatList
             data={this.props.GROUPS}
             renderItem={renderGroups}
             keyExtractor={(item) => item.toString()}
-            style={{flex: 1}}
           />
         </ScrollView>
       </Card>

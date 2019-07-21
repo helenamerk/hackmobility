@@ -3,7 +3,7 @@ import styles from '../config/styles';
 import {Button, View, Text} from 'react-native';
 import {BlueButton, InverseButton} from '../components/Button';
 import colors from '../config/colors'; // 1.0.0-beta.27
-import {getUserGroup} from '../requests';
+import {getUserGroup, getGroups} from '../requests';
 
 class HomeScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
@@ -52,7 +52,8 @@ class HomeScreen extends React.Component {
 
   handleGroupChangePress = () => {
     console.log('essentially Logout');
-    this.props.navigation.navigate('LoginScreen');
+    const groups = getGroups();
+    this.props.navigation.navigate('GroupScreen');
   };
 
   render() {
