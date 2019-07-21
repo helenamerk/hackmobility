@@ -42,8 +42,6 @@ class GroupRenderer extends Component {
 
   render() {
     // const { navigate } = this.props.navigation;
-    console.log('_--------');
-    console.log(this.props.GROUPS);
     const renderGroups = ({item, index}) => {
       return (
         <ListItem

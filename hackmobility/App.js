@@ -1,5 +1,5 @@
 import React from "react";
-import { View, WebView } from "react-native";
+
 import { createStackNavigator, createAppContainer } from "react-navigation"; // 1.0.0-beta.27
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
@@ -8,6 +8,9 @@ import LocationCheckScreen from "./screens/LocationCheckScreen";
 import GroupHomeScreen from "./screens/GroupHomeScreen";
 import EndRideScreen from "./screens/EndRideScreen";
 import colors from "./config/colors";
+
+import MyWebViewScreen from "./screens/MyWebViewScreen";
+import CreateGroup from "./screens/CreateGroup";
 
 const MainStack = createStackNavigator(
   {
@@ -28,6 +31,12 @@ const MainStack = createStackNavigator(
     },
     EndRideScreen: {
       screen: EndRideScreen
+    },
+    MyWebViewScreen: {
+      screen: MyWebViewScreen
+    },
+    CreateGroup: {
+      screen: CreateGroup
     }
   },
   {

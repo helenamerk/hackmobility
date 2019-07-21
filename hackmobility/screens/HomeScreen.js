@@ -56,6 +56,10 @@ class HomeScreen extends React.Component {
     this.props.navigation.navigate("GroupScreen");
   };
 
+  handleNewGroup = () => {
+    this.props.navigation.navigate('CreateGroup');
+  };
+
   render() {
     let { navigation } = this.props;
 
@@ -69,8 +73,12 @@ class HomeScreen extends React.Component {
           <View style={styles.formFields}>
             <BlueButton label="Start" onPress={this.handleStartPress} />
             <InverseButton
-              label="Change Groups"
+              label='Select/Change Groups'
               onPress={this.handleGroupChangePress}
+            />
+            <InverseButton
+              label='Create New Group'
+              onPress={this.handleNewGroup}
             />
           </View>
         </View>

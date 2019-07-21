@@ -3,7 +3,8 @@ import {Text, View, KeyboardAvoidingView} from 'react-native';
 import {BlueButton, InverseButton} from '../components/Button';
 import GroupRenderer from '../components/GroupRenderer';
 import styles from '../config/styles';
-import {setGroup, getGroups} from '../requests';
+import {setGroup, getGroups, startSmartcarAuth} from '../requests';
+import FormTextInput from '../components/FormTextInput';
 
 class LoginScreen extends React.Component {
   static navigationOptions = ({navigation, navigationOptions}) => {
@@ -24,6 +25,7 @@ class LoginScreen extends React.Component {
     password: '',
     failed: false,
     groups: [],
+    newGroupName: '',
   };
 
   componentDidMount() {
@@ -36,8 +38,8 @@ class LoginScreen extends React.Component {
     this.setState({passengerName: passengerName});
   };
 
-  handlePasswordChange = (password) => {
-    this.setState({password: password});
+  handleGroupName = (groupName) => {
+    this.setState({groupName: groupName});
   };
 
   login = async () => {
@@ -46,6 +48,17 @@ class LoginScreen extends React.Component {
 
   groupPressHandler = (groupName) => {
     this.props.navigation.navigate('LoginScreen', {groupName: groupName});
+  };
+
+  handleNewGroupPress = () => {
+    const openUrl = (authURL) => {
+      console.log(authURL);
+      this.props.navigation.navigate('MyWebViewScreen', {url: authURL});
+    };
+    startSmartcarAuth(this.state.groupName).then((authURL) => {
+      console.log('helps');
+      openUrl(authURL);
+    });
   };
 
   render() {
@@ -60,16 +73,29 @@ class LoginScreen extends React.Component {
     }
     return (
       <View>
-        <InverseButton
-          label='Create Group'
-          onPress={this.handleNewGroupPress}
-          styles={{top: 20}}
-        />
-        <GroupRenderer
-          styles={{flex: 1, height: 10}}
-          GROUPS={this.state.groups}
-          onPress={this.groupPressHandler}
-        />
+        <KeyboardAvoidingView style={styles.container} behavior='padding'>
+          <View style={styles.form}>
+            <View style={styles.formFields}>
+              <FormTextInput
+                value={this.state.newGroupName}
+                onChangeText={this.handleGroupName}
+                placeholder='New Group Name'
+              />
+            </View>
+            <InverseButton
+              label='Create Group'
+              onPress={() => this.handleNewGroupPress('Hello World')}
+              styles={{top: 20}}
+            />
+          </View>
+        </KeyboardAvoidingView>
+        <View>
+          <GroupRenderer
+            styles={{flex: 1, height: 10}}
+            GROUPS={this.state.groups}
+            onPress={this.groupPressHandler}
+          />
+        </View>
       </View>
     );
   }
