@@ -51,7 +51,7 @@ class TripScreen extends React.Component {
               <RenderGroupMembers groupMembers={this.state.group_members} />
             </Card>
             <BlueButton
-              label='end of ride'
+              label='End Ride'
               onPress={this.HandleEndRide}
               style={{padding: 10}}
             />
