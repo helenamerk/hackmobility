@@ -1,10 +1,11 @@
-# hackmobility
-Hackmobility2019 Project: RideAid
+# RideAid (Hackmobility2019)
 
 ## Project Overview
 [Devpost Submission](https://devpost.com/software/hackmobility-project)
 
 We were awarded a winning hack by Shell with the opportunity to pitch to their new ventures VC department. In addition, we won the [Smartcar API](www.smartcar.com) runner-up award for _Best Use of the Smartcar API_.
+
+Smartcar is an API that enables connecting with vehicles remotely. Zero-hardware, brand-agnostic, with a developer-first mindset. Our app uses it to verify carpoolers are where they say they are (in a car), and to check for odometer delta to calculate carbon offset.
 
 # Summary
 
