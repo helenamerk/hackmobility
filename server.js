@@ -359,8 +359,8 @@ app.post("/hackmobility/Squidward", function(req, res) {
 
 
 const startCarClient = new smartcar.AuthClient({
-	clientId: 'a7f7346e-f725-4653-8465-d0bc0b0775e6',
-	clientSecret: 'c854164c-6d48-4c2e-93f3-05ec3db24853',
+	clientId: process.env.SMARTCAR_CLIENT_ID,
+	clientSecret: process.env.SMARTCAR_CLIENT_SECRET,
 	redirectUri: 'https://www.mdshulman.com/hackmobility/smartcarRedirect',
 	scope: ['required:read_location','required:read_odometer'],
 	testMode: true,
